@@ -2,12 +2,12 @@ import Counter from "../components/counter"
 import Footer from "../components/Footer"
 import Header from "../components/header"
 
-function Home(){
+function Login(){
     return(
       <>
         <Header />
           <h1>
-            Bienvenue
+            Login
         </h1>
         <p>
             <Counter />
@@ -16,4 +16,4 @@ function Home(){
       </>
     )
 }
-export default Home
+export default Login
