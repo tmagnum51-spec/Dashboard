@@ -3,8 +3,8 @@
     "id": "user123",
     "weeklyGoal": 2,
   "userInfos": {
-    "firstName": "Sophie",
-    "lastName": "Martin",
+    "firstName": "Sophie2",
+    "lastName": "Martin2",
     "age": 32,
     "gender": "female",
     "profilePicture": "http://localhost:8000/images/sophie.jpg",
