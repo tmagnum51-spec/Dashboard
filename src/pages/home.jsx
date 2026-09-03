@@ -1,17 +1,18 @@
-import Counter from "../components/counter"
+import DistanceChart from "../components/DistanceChart"
 import Footer from "../components/Footer"
 import Header from "../components/header"
+import Dashboard from "./dashboard"
 
 function Home(){
     return(
       <>
         <Header />
           <h1>
-            Bienvenue
+            Dashboard
         </h1>
-        <p>
-            <Counter />
-        </p>    
+        <div>
+            <Dashboard />
+        </div>    
         <Footer />
       </>
     )

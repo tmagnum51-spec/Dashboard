@@ -1,4 +1,4 @@
-import Counter from "../components/counter"
+import DistanceChart from "../components/DistanceChart"
 import Footer from "../components/Footer"
 import Header from "../components/header"
 
@@ -10,7 +10,7 @@ function Login(){
             Login
         </h1>
         <p>
-            <Counter />
+            <DIstanceChart />
         </p>    
         <Footer />
       </>
