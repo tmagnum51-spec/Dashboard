@@ -1,18 +1,19 @@
 [
-{
+  {
     "id": "user123",
     "weeklyGoal": 2,
-  "userInfos": {
-    "firstName": "Sophie",
-    "lastName": "Martin",
-    "age": 32,
-    "gender": "female",
-    "profilePicture": "http://localhost:8000/images/sophie.jpg",
-    "height": 165,
+    "userInfos": {
+      "firstName": "Sophie",
+      "lastName": "Martin",
+      "age": 32,
+      "gender": "female",
+      "profilePicture": "http://localhost:8000/images/sophie.jpg",
+      "height": 165,
       "weight": 60,
       "createdAt": "2025-01-01"
-    },
-  
+    }
+  },
+  {
     "id": "user789",
     "goal": 3,
     "userInfos": {
@@ -24,8 +25,10 @@
       "weight": 62,
       "profilePicture": "http://localhost:8000/images/emma.jpg",
       "createdAt": "2025-01-01"
-    },
-     "id": "user456",
+    }
+  },
+  {
+    "id": "user456",
     "userInfos": {
       "firstName": "Marc",
       "lastName": "Dubois",
@@ -37,5 +40,5 @@
       "profilePicture": "http://localhost:8000/images/marc.jpg",
       "createdAt": "2025-01-01"
     }
-}
+  }
 ]

@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { mockApi } from '../services/mockApi';
+// On importe uniquement la fonction regroupée getUserById
+import { getUserById } from '../services/api';
 import DistanceChart from '../components/DistanceChart';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    mockApi.getUserById("user123").then((data) => {
-      setUserData(data);
-    });
+    // Un seul appel !
+    getUserById("user123")
+      .then((data) => {
+        setUserData(data);
+      })
+      .catch((error) => {
+        console.error('Erreur :', error);
+      });
   }, []);
 
   if (!userData) {
