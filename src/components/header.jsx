@@ -4,21 +4,29 @@ import { Link, useNavigate } from 'react-router-dom'
 import './Header.css';
 
 function Header() {
+    const navigate=useNavigate()
+    function handleLogout() {
+        localStorage.removeItem("userId")
+        localStorage.removeItem("token")
+        navigate("/")
+    }
   return (
-    <header>SPORTSEE
-        <nav>
+    <header>
+        <div className="header-logo"> SPORTSEE</div>
+        <nav className="header-nav">
             <ul>
                 <li>
-                    <Link to={"/"}>Accueil</Link>
+                    <Link to={"/profile"} className="nav-link">Profile</Link>
                     
                 </li>
                 <li>
-                    <Link to={"/dashboard"}>Dashboard</Link>
+                    <Link to={"/dashboard"} className="nav-link">Dashboard</Link>
                     
                 </li>
                 <li>
                     
-                    <Link to={"/login"}>Login</Link>
+           
+                    <button onClick={handleLogout} className="nav-logout-btn">Logout</button>
                 </li>
             </ul>
         </nav>

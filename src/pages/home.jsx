@@ -6,7 +6,7 @@ import Dashboard from "./dashboard"
 function Home(){
     return(
       <>
-        <Header />
+        
           <h1>
             Dashboard
         </h1>

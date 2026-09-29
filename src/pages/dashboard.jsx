@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 // On importe uniquement la fonction regroupée getUserById
 import { getUserById } from '../services/api';
 import DistanceChart from '../components/DistanceChart';
+import Header from '../components/header';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     // Un seul appel !
-    getUserById("user123")
+    const user = localStorage.getItem("userId")
+    getUserById(user)
       .then((data) => {
         setUserData(data);
+        console.log (data)
       })
       .catch((error) => {
         console.error('Erreur :', error);
@@ -22,12 +25,15 @@ const Dashboard = () => {
   }
 
   return (
+    <>
+    <Header />
     <main style={{ padding: '20px' }}>
       <h1>Bonjour {userData.userInfos?.firstName} 👋</h1>
 
       {/* Graphique de distance */}
       <DistanceChart data={userData.runningData} />
     </main>
+    </>
   );
 };
 
