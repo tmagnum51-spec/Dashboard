@@ -3,7 +3,7 @@
     "id": "user123",
     "weeklyGoal": 2,
     "userInfos": {
-      "firstName": "Sophie",
+      "firstName": "Sophie2",
       "lastName": "Martin",
       "age": 32,
       "gender": "female",
@@ -17,7 +17,7 @@
     "id": "user789",
     "goal": 3,
     "userInfos": {
-      "firstName": "Emma",
+      "firstName": "Emma2",
       "lastName": "Leroy",
       "age": 28,
       "gender": "female",

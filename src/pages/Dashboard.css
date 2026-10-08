@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Style global du fond */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f3f4f8;
+  font-family: 'Roboto', sans-serif;
+  color: #1f2937;
+}
+
+/* Conteneur principal centré */
+.dashboard-container {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px;
+  box-sizing: border-box;
+}
+
+/* Titres de sections */
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 32px 0 8px 0;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0 0 20px 0;
+}
+
+/* Grille pour les 2 graphiques du haut (DistanceChart & HeartRateChart) */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* Wrapper de carte universel */
+.card-wrapper {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+/* Zone du bas (WeeklySummary) */
+.weekly-wrapper {
+  width: 100%;
+}
+
+/* Adaptation pour écrans plus petits / tablettes */
+@media (max-width: 900px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}

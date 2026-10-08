@@ -1,0 +1,130 @@
+.weekly-summary-container {
+  display: flex;
+  gap: 16px;
+  max-width: 750px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.summary-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* Carte Donut (Gauche) */
+.donut-card {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.donut-header {
+  font-size: 16px;
+}
+
+.goal-highlight {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0029ff;
+}
+
+.goal-text {
+  color: #a0aabf;
+}
+
+.summary-subtitle {
+  font-size: 13px;
+  color: #828ca0;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.donut-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+/* Positionnement des légendes du Donut */
+.donut-legend {
+  position: absolute;
+  font-size: 11px;
+  color: #707b93;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend-left {
+  bottom: 25px;
+  left: 10px;
+}
+
+.legend-right {
+  top: 25px;
+  right: 15px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-blue {
+  background-color: #0029ff;
+}
+
+.dot-light {
+  background-color: #b0c2ff;
+}
+
+/* Colonne de droite (Métriques) */
+.summary-metrics-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.metric-label {
+  font-size: 13px;
+  color: #828ca0;
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.metric-unit {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.blue-text {
+  color: #0029ff;
+}
+
+.blue-text .metric-unit {
+  color: #b0c2ff;
+}
+
+.red-text {
+  color: #ff4d4d;
+}
+
+.red-text .metric-unit {
+  color: #ffc0c0;
+}

@@ -37,7 +37,7 @@ export default function Login() {
 
     <form onSubmit={handleLogin}>
 
-      <h2>Connexion</h2>
+      <h2>Se connecter</h2>
 
       {error && <p style={{color: 'red'}}>{error}</p>}
 

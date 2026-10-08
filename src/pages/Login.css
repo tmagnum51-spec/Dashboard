@@ -1,0 +1,41 @@
+
+    /* Conteneur Logo */
+    .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    }
+
+    /* Texte du logo en bleu */
+    .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0029ff; /* Bleu vif exact du logo */
+    letter-spacing: 0.5px;
+    }
+
+    /* Icône à 4 barres dégradées */
+    .logo-icon {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 28px;
+    }
+
+    .logo-icon span {
+    width: 5px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #ff6047 0%, #ff1c02 50%, #5252f8 100%);
+    }
+
+    /* Hauteurs respectives des barres */
+    .logo-icon span:nth-child(1) { height: 18px; }
+    .logo-icon span:nth-child(2) { height: 26px; }
+    .logo-icon span:nth-child(3) { height: 28px; }
+    .logo-icon span:nth-child(4) { height: 22px; }
+
+    /* Si tu utilises un <img> dans .header-logo */
+    .header-logo img {
+    height: 32px;
+    width: auto;
+    }

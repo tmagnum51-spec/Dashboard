@@ -1,0 +1,105 @@
+   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+   /* Conteneur principal du Header */
+    header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    width: 100%;
+    max-width: 1140px;
+    height: 49px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    }
+
+    /* Conteneur Logo */
+    .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    }
+
+    /* Texte du logo en bleu */
+    .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0029ff; /* Bleu vif exact du logo */
+    letter-spacing: 0.5px;
+    }
+
+    /* Icône à 4 barres dégradées */
+    .logo-icon {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 28px;
+    }
+
+    .logo-icon span {
+    width: 5px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #ff6047 0%, #ff1c02 50%, #5252f8 100%);
+    }
+
+    /* Hauteurs respectives des barres */
+    .logo-icon span:nth-child(1) { height: 18px; }
+    .logo-icon span:nth-child(2) { height: 26px; }
+    .logo-icon span:nth-child(3) { height: 28px; }
+    .logo-icon span:nth-child(4) { height: 22px; }
+
+    /* Si tu utilises un <img> dans .header-logo */
+    .header-logo img {
+    height: 32px;
+    width: auto;
+    }
+
+    /* Structure de la Navigation */
+    .header-nav {
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    }
+
+    .header-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    }
+
+    /* Style des Liens */
+    .nav-link {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+    color: #ff0101;
+    }
+
+    /* Style du Bouton Logout */
+    .nav-logout-btn {
+    background: none;
+    border: none;
+    color: #000000;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+    }
+
+    .nav-logout-btn:hover {
+    color: #ff0101;
+    }

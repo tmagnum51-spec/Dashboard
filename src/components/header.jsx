@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 // import logo from '../../assets/logo.svg'; 
-import './Header.css';
+import './header.css';
 
 function Header() {
     const navigate=useNavigate()
@@ -12,7 +12,15 @@ function Header() {
     }
   return (
     <header>
-        <div className="header-logo"> SPORTSEE</div>
+        <div className="header-logo">
+  <div className="logo-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <span className="logo-text">SPORTSEE</span>
+    </div>
         <nav className="header-nav">
             <ul>
                 <li>
@@ -23,10 +31,10 @@ function Header() {
                     <Link to={"/dashboard"} className="nav-link">Dashboard</Link>
                     
                 </li>
-                <li>
-                    
-           
-                    <button onClick={handleLogout} className="nav-logout-btn">Logout</button>
+                <li className="nav-divider" aria-hidden="true">
+                </li>
+                <li>          
+                    <button onClick={handleLogout} className="nav-logout-btn">Se déconnecter</button>
                 </li>
             </ul>
         </nav>

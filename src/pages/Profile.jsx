@@ -1,14 +1,16 @@
 import Footer from "../components/Footer"
 import Header from "../components/header"
+import Profile from "../components/Profile"
 import React from 'react'
 
-function Profile() {
+function ProfilePage() {
   return (
     <>
     <Header />
-    <div>Profile</div>
+    <Profile />
+    
     </>
   )
 }
 
-export default Profile
+export default ProfilePage
