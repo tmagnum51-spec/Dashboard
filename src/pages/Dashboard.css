@@ -4,14 +4,16 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #f3f4f8;
+  background-color: rgba(242, 243, 255, 1);
   font-family: 'Roboto', sans-serif;
   color: #1f2937;
 }
 
 /* Conteneur principal centré */
-.dashboard-container {
+.dashboard-container
+ {
   max-width: 1140px;
+  width: 1052px;
   width: 100%;
   margin: 0 auto;
   padding: 24px 20px;
@@ -51,6 +53,7 @@ body {
 /* Zone du bas (WeeklySummary) */
 .weekly-wrapper {
   width: 100%;
+  flex: auto;
 }
 
 /* Adaptation pour écrans plus petits / tablettes */

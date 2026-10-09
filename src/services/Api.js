@@ -1,4 +1,4 @@
-const isDataMocked = false; 
+const isDataMocked = true; 
 
 const BASE_URL = 'http://localhost:8000/api';
 
@@ -118,7 +118,7 @@ export async function getUserInfo(token) {
 /**
  * Service pour l'Activité Utilisateur (GET /api/user-activity)
  */
-export async function getUserActivity(token, startWeek = '2024-01-01', endWeek = '2024-02-01') {
+export async function getUserActivity(token, startWeek = '2025-01-06', endWeek = '2026-02-01') {
   if (isDataMocked) {
     const response = await fetch('/mock/userActivity.json');
     if (!response.ok) {

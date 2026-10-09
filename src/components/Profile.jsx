@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { getUserById } from '../services/api';
+import React, { useState, useEffect, useMemo } from 'react';
+import { getUserById } from '../services/Api';
 import Header from '../components/header';
+
 import './Profile.css';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  
 
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      getUserById(userId)
+    const user = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    if (user) {
+      getUserById(token,user)
         .then((data) => setUserData(data))
         .catch((err) => console.error('Erreur lors du chargement du profil :', err));
     }
@@ -32,6 +35,14 @@ const Profile = () => {
       year: 'numeric'
     });
   };
+  const activities = userData.userActivity || [];
+  // Calcul dynamique de la distance totale parcourue à partir des activités
+    // const totalDistance = useMemo(() => {
+    //   if (!activities.length) return 0;
+    //   const sum = activities.reduce((acc, session) => acc + (Number(session.distance) || 0), 0);
+    //   return Math.round(sum * 10) / 10; // Arrondi propre à 1 décimale
+    // }, [activities]);
+  
 
   return (
     <>
@@ -74,7 +85,7 @@ const Profile = () => {
               <div className="stat-box">
                 <span className="stat-label">Distance totale parcourue</span>
                 <div className="stat-value-group">
-                  <span className="stat-value">{stats.totalDistance || 312}</span>
+                  <span className="stat-value">{stats.totalDistance || 311}</span>
                   <span className="stat-unit">km</span>
                 </div>
               </div>

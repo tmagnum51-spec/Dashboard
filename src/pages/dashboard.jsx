@@ -7,6 +7,7 @@ import HeartRateChart from '../components/HeartRateChart';
 import WeeklySummary from '../components/WeeklySummary';
 import ProfileSummary from '../components/ProfileSummary';
 import './Dashboard.css';
+import Footer from '../components/Footer';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -39,7 +40,7 @@ const Dashboard = () => {
     return <div style={{ padding: '20px' }}>Chargement des données...</div>;
   }
 
-  if(!error){
+  if(error){
     return <div style={{ padding: '20px', color: 'red' }}>Erreur : {error}</div>;
   }
 
@@ -76,6 +77,7 @@ const Dashboard = () => {
           <WeeklySummary data={activityData} />
         </div>
       </div>
+      <Footer />
     </>
   );
 };
