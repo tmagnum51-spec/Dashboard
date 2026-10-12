@@ -13,6 +13,7 @@ import './HeartRateChart.css';
 
 const HeartRateChart = ({ data = [] }) => {
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
 
   // 1. Découpage et regroupement des données par semaine (Lundi -> Dimanche)
   const weeksData = useMemo(() => {
@@ -25,6 +26,7 @@ const HeartRateChart = ({ data = [] }) => {
     const weeksMap = new Map();
 
     sorted.forEach((session) => {
+    
       if (!session.date) return;
       const d = new Date(session.date);
       
@@ -57,9 +59,9 @@ const HeartRateChart = ({ data = [] }) => {
       
       weekObj.days[dayIndex] = {
         day: daysOrder[dayIndex],
-        minBpm: session.minHeartRate || session.minBpm || 135,
-        maxBpm: session.maxHeartRate || session.maxBpm || 175,
-        avgBpm: session.averageHeartRate || session.avgBpm || 165
+        minBpm: session.heartRate?.min || session.minBpm || 135,
+        maxBpm: session.heartRate?.max || session.maxBpm || 175,
+        avgBpm: session.heartRate?.average || session.avgBpm || 165
       };
     });
 
@@ -131,6 +133,8 @@ const HeartRateChart = ({ data = [] }) => {
             data={currentWeek.days}
             margin={{ top: 20, right: 10, left: -20, bottom: 0 }}
             barGap={4}
+            onMouseEnter={() => setIsHovered(true)}   
+            onMouseLeave={() => setIsHovered(false)} 
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
             
@@ -149,15 +153,7 @@ const HeartRateChart = ({ data = [] }) => {
               tick={{ fill: '#6b7280', fontSize: 12 }}
             />
 
-            <Tooltip
-              formatter={(value, name) => {
-                if (name === 'minBpm') return [`${value} BPM`, 'Min'];
-                if (name === 'maxBpm') return [`${value} BPM`, 'Max'];
-                if (name === 'avgBpm') return [`${value} BPM`, 'Moyenne'];
-                return [value, name];
-              }}
-              contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-            />
+          
 
             {/* Barre 1 : Min BPM (Rose clair) */}
             <Bar
@@ -180,12 +176,19 @@ const HeartRateChart = ({ data = [] }) => {
             {/* Ligne Courbe Moyenne/Max avec points bleus */}
             <Line
               type="monotone"
-              dataKey="avgBpm"
-              name="avgBpm"
-              stroke="#e0e7ff"
-              strokeWidth={3}
-              dot={{ r: 4, fill: '#2563eb', stroke: '#2563eb', strokeWidth: 1 }}
-              activeDot={{ r: 6 }}
+              dataKey="maxBpm"
+              name="maxBpmLine"
+              connectNulls={true}
+              stroke={isHovered ? '#2563eb' : '#ced5eb'}
+              strokeWidth={isHovered ? 3 : 1.5}
+              dot={{ 
+                r: isHovered ? 5 : 4, 
+                fill: '#2563eb', 
+                stroke: '#2563eb', 
+                strokeWidth: 1 
+              }}
+              activeDot={{ r: 6, fill: '#2563eb', stroke: '#ffffff', strokeWidth: 2 }}
+              
             />
           </ComposedChart>
         </ResponsiveContainer>

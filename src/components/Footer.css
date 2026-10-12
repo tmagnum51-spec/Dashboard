@@ -1,19 +1,27 @@
-.Footer{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-padding: 10px 100px;
-gap: 831px;
+.Footer-main {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px; /* Marges intérieures confortables sur les côtés */
+  
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto; /* Centre le footer sur les grands écrans */
 
-width: 1440px;
-height: 40.66px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #202020;
+}
 
-background: #FFFFFF;
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* Espace entre "Conditions générales", "Contact" et le logo */
+}
 
-/* À l'intérieur de l'auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
-
+.footer-logo-icon {
+  display: flex;
+  align-items: center;
 }

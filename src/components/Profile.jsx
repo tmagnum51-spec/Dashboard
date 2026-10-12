@@ -1,32 +1,37 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { getUserById } from '../services/Api';
-import Header from '../components/header';
-
+import React from 'react';
 import './Profile.css';
+import { useDashboard } from '../context/DashboardContext';
 
 const Profile = () => {
-  const [userData, setUserData] = useState(null);
-  
+  // On pioche directement tout ce dont on a besoin depuis le Context
+  const { 
+    userData, 
+    totalDistance, 
+    totalSessions, 
+    totalCalories,
+    maxHeartRate, 
+    totalHours, 
+    totalMinutes, 
+    restDays, 
+    loading, 
+    error 
+  } = useDashboard();
 
-  useEffect(() => {
-    const user = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-    if (user) {
-      getUserById(token,user)
-        .then((data) => setUserData(data))
-        .catch((err) => console.error('Erreur lors du chargement du profil :', err));
-    }
-  }, []);
-
-  if (!userData) {
+  if (loading) {
     return <div className="profile-loading">Chargement du profil...</div>;
   }
 
-  // Sécurisation de l'accès aux données
-  const info = userData.userInfos || {};
-  const stats = info.stats || {};
+  if (error) {
+    return <div className="profile-loading" style={{ color: 'red' }}>{error}</div>;
+  }
 
-  // Formate la date de création ("14 juin 2023")
+  if (!userData) {
+    return <div className="profile-loading">Aucune donnée disponible.</div>;
+  }
+
+  const info = userData.userInfos || {};
+  const stats = info.stats || {}; // Pour les stats statiques si besoin (temps, calories, repos)
+
   const formatDate = (dateString) => {
     if (!dateString) return '14 juin 2023';
     return new Date(dateString).toLocaleDateString('fr-FR', {
@@ -35,94 +40,31 @@ const Profile = () => {
       year: 'numeric'
     });
   };
-  const activities = userData.userActivity || [];
-  // Calcul dynamique de la distance totale parcourue à partir des activités
-    // const totalDistance = useMemo(() => {
-    //   if (!activities.length) return 0;
-    //   const sum = activities.reduce((acc, session) => acc + (Number(session.distance) || 0), 0);
-    //   return Math.round(sum * 10) / 10; // Arrondi propre à 1 décimale
-    // }, [activities]);
-  
 
   return (
-    <>
-      
-      <main className="profile-container">
-        {/* Section Entête / Avatar */}
-        <section className="profile-header-card">
-          <div className="profile-avatar">
-            {info.firstName?.[0]}{info.lastName?.[0]}
-          </div>
-          <div className="profile-header-info">
-            <h1>{info.firstName} {info.lastName}</h1>
-            <p className="member-since">
-              Membre depuis le {formatDate(info.createdAt)}
-            </p>
-          </div>
-        </section>
-
-        <div className="profile-grid">
-          {/* Bloc de Gauche : Vos Statistiques */}
-          <section className="profile-card stats-card">
-            <div className="card-header">
-              <h2>Vos statistiques</h2>
-              <span className="since-date">depuis le {formatDate(info.createdAt)}</span>
+    <main className="profile-container">
+      <div className="profile-grid">
+        
+        {/* COLONNE DE GAUCHE */}
+        <div className="profile-left-column">
+          <section className="profile-header-card">
+            <div className="profile-avatar-img">
+              <img 
+                src={info.avatar || "../public/assets/img/avatar.jpg"} 
+                alt={`${info.firstName} ${info.lastName}`} 
+                className="profile-summary-avatar"
+              />
             </div>
-
-            <div className="stats-grid">
-              {/* Temps total */}
-              <div className="stat-box">
-                <span className="stat-label">Temps total couru</span>
-                <div className="stat-value-group">
-                  <span className="stat-value">{stats.totalHours || 27}</span>
-                  <span className="stat-unit">h</span>
-                  <span className="stat-value">{stats.totalMinutes || 15}</span>
-                  <span className="stat-unit">min</span>
-                </div>
-              </div>
-
-              {/* Distance totale */}
-              <div className="stat-box">
-                <span className="stat-label">Distance totale parcourue</span>
-                <div className="stat-value-group">
-                  <span className="stat-value">{stats.totalDistance || 311}</span>
-                  <span className="stat-unit">km</span>
-                </div>
-              </div>
-
-              {/* Nombre de sessions */}
-              <div className="stat-box">
-                <span className="stat-label">Nombre de sessions</span>
-                <div className="stat-value-group">
-                  <span className="stat-value">{stats.totalSessions || 41}</span>
-                  <span className="stat-unit">sessions</span>
-                </div>
-              </div>
-
-              {/* Calories brûlées */}
-              <div className="stat-box">
-                <span className="stat-label">Calories brûlées</span>
-                <div className="stat-value-group">
-                  <span className="stat-value">{stats.totalCalories || 25000}</span>
-                  <span className="stat-unit">cal</span>
-                </div>
-              </div>
-
-              {/* Jours de repos */}
-              <div className="stat-box">
-                <span className="stat-label">Nombre de jours de repos</span>
-                <div className="stat-value-group">
-                  <span className="stat-value">{stats.restDays || 9}</span>
-                  <span className="stat-unit">jours</span>
-                </div>
-              </div>
+            <div className="profile-header-info">
+              <h1>{info.firstName} {info.lastName}</h1>
+              <p className="member-since">
+                Membre depuis le {formatDate(info.createdAt)}
+              </p>
             </div>
           </section>
 
-          {/* Bloc de Droite : Votre Profil */}
           <section className="profile-card details-card">
             <h2>Votre profil</h2>
-
             <ul className="profile-details-list">
               <li>
                 <span className="detail-label">Âge :</span>
@@ -138,13 +80,82 @@ const Profile = () => {
               </li>
               <li>
                 <span className="detail-label">Poids :</span>
-                <span className="detail-value">{info.weight || '58kg'}</span>
+                <span className="detail-value">{info.weight ? `${info.weight}kg` : '58kg'}</span>
               </li>
             </ul>
           </section>
         </div>
-      </main>
-    </>
+
+        {/* COLONNE DE DROITE : Statistiques */}
+        <div className="profile-right-column">
+          <div className="stats-header-flying">
+            <h2>Vos statistiques</h2>
+            <span className="since-date-flying">depuis le {formatDate(info.createdAt)}</span>
+          </div>
+
+          <div className="stats-flying-grid">
+            
+            {/* Temps total dynamique */}
+            <div className="stat-box-flying">
+              <span className="stat-label-flying">Temps total couru</span>
+              <div className="stat-value-group-flying">
+                <span className="stat-value-flying">{totalHours || 27}</span>
+                <span className="stat-unit-flying">h</span>
+                <span className="stat-value-flying">{totalMinutes || 15}</span>
+                <span className="stat-unit-flying">min</span>
+              </div>
+            </div>
+
+            {/* Calories dynamiques */}
+            <div className="stat-box-flying">
+              <span className="stat-label-flying">Calories brûlées</span>
+              <div className="stat-value-group-flying">
+                <span className="stat-value-flying">{totalCalories}</span>
+                <span className="stat-unit-flying">cal</span>
+              </div>
+            </div>
+
+            {/* Distance totale dynamique */}
+            <div className="stat-box-flying">
+              <span className="stat-label-flying">Distance totale parcourue</span>
+              <div className="stat-value-group-flying">
+                <span className="stat-value-flying">{totalDistance}</span>
+                <span className="stat-unit-flying">km</span>
+              </div>
+            </div>
+
+            {/* Jours de repos */}
+            <div className="stat-box-flying">
+              <span className="stat-label-flying">Nombre de jours de repos</span>
+              <div className="stat-value-group-flying">
+                <span className="stat-value-flying">{restDays}</span>
+                <span className="stat-unit-flying">jours</span>
+              </div>
+            </div>
+
+            {/* Plus haute frequence cardio */}
+            <div className="stat-box-flying">
+              <span className="stat-label-flying">Plus haute frequence cardio</span>
+              <div className="stat-value-group-flying">
+                <span className="stat-value-flying">{maxHeartRate}</span>
+                <span className="stat-unit-flying">BPM</span>
+              </div>
+            </div>
+
+            {/* Nombre de sessions dynamique */}
+            <div className="stat-box-flying">
+              <span className="stat-label-flying">Nombre de sessions</span>
+              <div className="stat-value-group-flying">
+                <span className="stat-value-flying">{totalSessions}</span>
+                <span className="stat-unit-flying">sessions</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
   );
 };
 

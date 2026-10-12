@@ -15,14 +15,14 @@
 }
 
 .hr-chart-value {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
   color: #ef4444; /* Rouge vif */
   line-height: 1.1;
 }
 
 .hr-chart-subtitle {
-  font-size: 14px;
+  font-size: 12px;
   color: #6b7280;
   margin-top: 4px;
 }
@@ -57,7 +57,7 @@
 }
 
 .hr-nav-date {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #374151;
 }
@@ -77,7 +77,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 12px;
   color: #4b5563;
 }
 

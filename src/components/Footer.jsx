@@ -1,13 +1,15 @@
 import React from 'react'
+import './Footer.css';
 
 function Footer() {
   return (
     <>
-    <div className="Footer">
-      <div className="footer-copyright">©Sportsee Tous droits réservés</div>
-      <div className="footer-condition">Conditions générales</div>
-      <div className="footer-contacts">Contact</div>
-        <div className="footer-logo">
+    <div className="Footer-main">
+      <div className="footer-left">©Sportsee Tous droits réservés</div>
+      <div className="footer-right">
+        <span>Conditions générales</span>
+        <span>Contact</span>   
+          <div className="footer-logo-icon">
           <svg width="19" height="21" viewBox="0 0 19 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient id="paint0_linear_9_106" x1="5.50003" y1="5.65625" x2="5.50003" y2="20.6562" gradientUnits="userSpaceOnUse">
@@ -85,6 +87,7 @@ function Footer() {
                     <rect x="3" y="14.3281" width="3" height="11" rx="1.5" transform="rotate(180 3 14.3281)" fill="url(#paint9_linear_9_106)"/>
                   </g>
                 </svg>
+                </div>
               </div>
             </div>
     </>

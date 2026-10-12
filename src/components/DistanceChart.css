@@ -1,25 +1,49 @@
+.distance-chart-card {
 
+}
 
-/* Navigation et en-tête */
 .distance-chart-header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.distance-chart-date {
-  font-weight: 400;
-  font-family: 'inter' sans-serif;
+.distance-main-title {
+  font-size: 22px;
+  font-weight: 700;
+  color:rgba(11, 35, 244, 1);
+  margin: 0 0 5px 0;
+}
+
+.distance-subtitle {
   font-size: 12px;
-  color: #1e293b;
-  min-width: 180px;
-  text-align: center;
+  color: #74798c;
 }
 
-/* Boutons flèches */
-.distance-chart-btn {
+/* Style des contrôles identique au composant HeartRate */
+.distance-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fdfdfd;
+  border: 1px solid #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.hr-chart-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+.hr-nav-btn {
   background-color: hsl(180, 100%, 100%);
   border: 1px solid #cbd5e1;
   color: #334155;
@@ -33,20 +57,57 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+.distance-chart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  color: #74798c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
 
 .distance-chart-btn:hover:not(:disabled) {
-  background-color: #3b82f6;
-  color: #ffffff;
-  border-color: #3b82f6;
+  background-color: #edf2f7;
+  color: #1a202c;
 }
 
 .distance-chart-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
-/* Conteneur du graphique Recharts */
+.distance-chart-date {
+  font-size: 12px;
+  color: #20253a;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .distance-chart-wrapper {
-  width: 100%;
   height: 300px;
+  width: 100%;
+}
+
+.distance-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #74798c;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  display: inline-block;
 }

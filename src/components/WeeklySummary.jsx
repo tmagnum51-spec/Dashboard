@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import './WeeklySummary.css';
+import { useDashboard } from '../context/DashboardContext';
 
 const WeeklySummary = ({ data, weeklyGoal = 6 }) => {
   // Extraction des sessions depuis les données reçues

@@ -30,18 +30,59 @@ export const DashboardProvider = ({ children }) => {
       });
   }, []);
 
+  // -- Calculs globaux basés sur userActivity --
+  const activities = userData?.userActivity || [];
+
+  // Distance totale
+  const totalDistance = Math.round(
+    activities.reduce((acc, session) => acc + (Number(session.distance) || 0), 0) * 10
+  ) / 10;
+  
+  // Nombre de sessions
+  const totalSessions = activities.length;
+
+  // Calories totales
+  const totalCalories = activities.reduce((acc, session) => acc + (Number(session.caloriesBurned) || 0), 0);
+
+  // 1. Calcul de la moyenne globale de la fréquence cardiaque moyenne ("average")
+  const avgHeartRate = activities.length > 0 
+    ? Math.round(
+        activities.reduce((acc, session) => acc + (Number(session.heartRate?.average) || 0), 0) / activities.length
+      )
+    : 0;
+    // Highst HR
+    const maxHeartRate = activities.length > 0
+    ? Math.max(...activities.map(session => Number(session.heartRate?.max) || 0))
+    : 0;
+
+  // Temps total couru (en supposant que session.duration ou session.time est en minutes)
+  const totalMinutesAll = activities.reduce((acc, session) => acc + (Number(session.duration || session.time) || 0), 0);
+  const totalHours = Math.floor(totalMinutesAll / 60);
+  const totalMinutes = totalMinutesAll % 60;
+
+  // Jours de repos (exemple : estimation basée sur l'écart ou un calcul par défaut sécurisé)
+  // Si vos sessions ont des dates, on peut calculer les jours de repos, sinon on met une logique de secours
+  const restDays = 9; // ou calculé dynamiquement si vous avez les dates exactes
+
   return (
-    <DashboardContext.Provider value={{ userData, loading, error }}>
+    <DashboardContext.Provider 
+      value={{ 
+        userData, 
+        totalDistance, 
+        totalSessions, 
+        totalCalories,
+        avgHeartRate,
+        maxHeartRate, 
+        totalHours, 
+        totalMinutes, 
+        restDays, 
+        loading, 
+        error 
+      }}
+    >
       {children}
     </DashboardContext.Provider>
   );
 };
 
-// Hook personnalisé pour consommer le contexte facilement
-export const useDashboard = () => {
-  const context = useContext(DashboardContext);
-  if (!context) {
-    throw new Error("useDashboard doit être utilisé à l'intérieur d'un DashboardProvider");
-  }
-  return context;
-};
+export const useDashboard = () => useContext(DashboardContext);

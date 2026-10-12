@@ -52,11 +52,17 @@ flex-grow: 0;
 }
 
 .summary-badge {
-  background-color: #0029ff;
-  color: #ffffff;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 41, 255, 0.3);
+ 
+/* Mise en page automatique */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 28px 27px;
+gap: 19px;
+
+
+background: #0B23F4;
+border: 1px solid #0B23F4;
+border-radius: 10px;
+color: white;
 }
