@@ -1,0 +1,17 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.Profile-container
+{
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - [hauteur_header_footer]); /* Ou simplement min-height: 100vh si le Header/Footer sont intégrés différemment */
+}
+
+/* Le contenu central s'agrandit pour occuper tout l'espace vide disponible */
+.page-content {
+    flex: 1; 
+    min-height: 700px;
+}

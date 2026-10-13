@@ -1,0 +1,16 @@
+.error-coontainer
+{
+    display: flex;
+}
+
+.error404
+{
+    text-align: center;
+    color: blue;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    font-family: 'roboto';
+
+
+}

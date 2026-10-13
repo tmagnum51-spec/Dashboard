@@ -1,8 +1,12 @@
+import './errors.css';
+
 function Error(){
     return (
-        <h1>
-            Erreur
-        </h1>
+        <main className="error-coontainer">
+            <h1 className="error404">
+            Erreur, vous n'êtes plus sur la trace !
+            </h1>
+        </main>
     )
 }
 export default Error

@@ -21,7 +21,9 @@ export default function Login() {
       localStorage.setItem('token', user.token);
       localStorage.setItem('userId', user.userId);
 
-      navigate('/dashboard');
+      // Redirection avec rechargement complet
+      window.location.href = "/dashboard";
+      
     } catch (err) {
       setError(err.message || "Identifiants invalides");
     } finally {

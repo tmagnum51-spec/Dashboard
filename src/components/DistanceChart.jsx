@@ -5,6 +5,9 @@ import './DistanceChart.css';
 const DistanceChart = ({ data = [] }) => {
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const weeksPerBlock = 4;
+  
+  // État pour savoir si la souris est sur le graphique
+  const [isHovered, setIsHovered] = useState(false);
 
   const allWeeks = useMemo(() => {
     if (!Array.isArray(data) || data.length === 0) return [];
@@ -89,7 +92,7 @@ const DistanceChart = ({ data = [] }) => {
           <span className="distance-subtitle">Total des kilomètres 4 dernières semaines</span>
         </div>
 
-        {/* Boutons de navigation calqués sur le design de HeartRate */}
+        {/* Boutons de navigation */}
         <div className="hr-chart-nav">
           <button 
             className="hr-nav-btn"
@@ -109,12 +112,17 @@ const DistanceChart = ({ data = [] }) => {
         </div>
       </div>
 
-      <div className="distance-chart-wrapper">
+      {/* Le conteneur du graphique détecte l'entrée et la sortie de la souris */}
+      <div 
+        className="distance-chart-wrapper"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-            <XAxis dataKey="semaine" tickLine={false} axisLine={{ stroke: '#E0E0E0' }} />
-            <YAxis unit=" km" tickLine={false} axisLine={false} domain={[0, 'dataMax + 5']} />
+            <XAxis dataKey="semaine" tick={{ fontSize: 12, fill: '#707070' }} tickLine={false} axisLine={{ stroke: '#E0E0E0' }} />
+            <YAxis unit=" km" tick={{ fontSize: 12, fill: '#707070' }} tickLine={false} axisLine={false} domain={[0, 'dataMax + 5']} />
             <Tooltip 
               formatter={(val) => [`${val} km`]}
               labelFormatter={(label, payload) => 
@@ -123,7 +131,13 @@ const DistanceChart = ({ data = [] }) => {
                   : label
               }
             />
-            <Bar dataKey="distance" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={12} />
+            {/* La couleur change globalement selon isHovered, et le tooltip continue de fonctionner */}
+            <Bar 
+              dataKey="distance" 
+              fill={isHovered ? "#0b23f4" : "#b6bdfc"} 
+              radius={[4, 4, 0, 0]} 
+              barSize={12} 
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -1,32 +1,49 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import './WeeklySummary.css';
 import { useDashboard } from '../context/DashboardContext';
+import './WeeklySummary.css';
 
-const WeeklySummary = ({ data, weeklyGoal = 6 }) => {
-  // Extraction des sessions depuis les données reçues
-  const sessions = useMemo(() => {
-    if (Array.isArray(data)) return data;
-    return data?.runningData || data?.userActivity || [];
-  }, [data]);
+const WeeklySummary = () => {
+  const { userData, weeklyGoal, loading } = useDashboard();
 
-  // Calculs : nombre de courses réalisées, durée totale, distance totale
-  const completedCount = sessions.length;
+  if (loading || !userData) {
+    return <div className="weekly-summary-container">Chargement...</div>;
+  }
+
+  // 1. Extraction des sessions depuis le contexte
+  const activities = userData.userActivity || [];
+
+  // 2. Calcul local de la dernière semaine active (pour vos fausses données)
+  const currentWeekActivities = useMemo(() => {
+    if (activities.length === 0) return [];
+    
+    const latestDate = new Date(Math.max(...activities.map(s => new Date(s.date))));
+    const startOfLastWeek = new Date(latestDate);
+    startOfLastWeek.setDate(startOfLastWeek.getDate() - 6);
+
+    return activities.filter(session => {
+      const sessionDate = new Date(session.date);
+      return sessionDate >= startOfLastWeek && sessionDate <= latestDate;
+    });
+  }, [activities]);
+
+  // 3. Calculs locaux pour le résumé de la semaine
+  const completedCount = currentWeekActivities.length;
   const remainingCount = Math.max(0, weeklyGoal - completedCount);
 
-  const totalDuration = useMemo(() => {
-    return sessions.reduce((acc, curr) => acc + (Number(curr.duration) || 0), 0);
-  }, [sessions]);
+  const weeklyDuration = useMemo(() => {
+    return currentWeekActivities.reduce((acc, curr) => acc + (Number(curr.duration) || 0), 0);
+  }, [currentWeekActivities]);
 
-  const totalDistance = useMemo(() => {
-    const sum = sessions.reduce((acc, curr) => acc + (Number(curr.distance) || 0), 0);
+  const weeklyDistance = useMemo(() => {
+    const sum = currentWeekActivities.reduce((acc, curr) => acc + (Number(curr.distance) || 0), 0);
     return Math.round(sum * 10) / 10;
-  }, [sessions]);
+  }, [currentWeekActivities]);
 
   // Données pour le Donut Chart
   const pieData = [
     { name: 'réalisées', value: completedCount, color: '#0029ff' },
-    { name: 'restants', value: remainingCount, color: '#b0c2ff' }
+    { name: 'restants', value: remainingCount, color: 'rgba(182, 189, 252, 1)' }
   ];
 
   return (
@@ -60,7 +77,6 @@ const WeeklySummary = ({ data, weeklyGoal = 6 }) => {
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Légendes personnalisées positionnées sur le Donut */}
           <div className="donut-legend legend-left">
             <span className="dot dot-blue"></span>
             {completedCount} réalisées
@@ -72,21 +88,19 @@ const WeeklySummary = ({ data, weeklyGoal = 6 }) => {
         </div>
       </div>
 
-      {/* Cartes Droite : Métriques (Durée & Distance) */}
+      {/* Cartes Droite : Métriques (Durée & Distance de la semaine) */}
       <div className="summary-metrics-column">
-        {/* Durée */}
         <div className="summary-card metric-card">
           <span className="metric-label">Durée d'activité</span>
           <div className="metric-value blue-text">
-            {totalDuration} <span className="metric-unit">minutes</span>
+            {weeklyDuration} <span className="metric-unit">minutes</span>
           </div>
         </div>
 
-        {/* Distance */}
         <div className="summary-card metric-card">
           <span className="metric-label">Distance</span>
           <div className="metric-value red-text">
-            {totalDistance} <span className="metric-unit">kilomètres</span>
+            {weeklyDistance} <span className="metric-unit">kilomètres</span>
           </div>
         </div>
       </div>

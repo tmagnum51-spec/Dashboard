@@ -142,7 +142,7 @@ const HeartRateChart = ({ data = [] }) => {
               dataKey="day" 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fill: '#6b7280', fontSize: 13 }} 
+              tick={{ fill: '#707070', fontSize: 13 }} 
             />
             
             <YAxis
@@ -150,7 +150,7 @@ const HeartRateChart = ({ data = [] }) => {
               ticks={[130, 145, 160, 187]}
               axisLine={false}
               tickLine={false}
-              tick={{ fill: '#6b7280', fontSize: 12 }}
+              tick={{ fill: '#707070', fontSize: 12 }}
             />
 
           
@@ -159,7 +159,7 @@ const HeartRateChart = ({ data = [] }) => {
             <Bar
               dataKey="minBpm"
               name="minBpm"
-              fill="#fbcfe8"
+              fill="rgba(252, 193, 182, 1)"
               barSize={14}
               radius={[6, 6, 0, 0]}
             />
@@ -168,7 +168,7 @@ const HeartRateChart = ({ data = [] }) => {
             <Bar
               dataKey="maxBpm"
               name="maxBpm"
-              fill="#ef4444"
+              fill="rgba(244, 50, 11, 1)"
               barSize={14}
               radius={[6, 6, 0, 0]}
             />
@@ -179,15 +179,15 @@ const HeartRateChart = ({ data = [] }) => {
               dataKey="maxBpm"
               name="maxBpmLine"
               connectNulls={true}
-              stroke={isHovered ? '#2563eb' : '#ced5eb'}
+              stroke={isHovered ? '#0b19f4' : '#f2f3ff'}
               strokeWidth={isHovered ? 3 : 1.5}
               dot={{ 
                 r: isHovered ? 5 : 4, 
-                fill: '#2563eb', 
-                stroke: '#2563eb', 
+                fill: '#0b19f4', 
+                stroke: '#0b19f4', 
                 strokeWidth: 1 
               }}
-              activeDot={{ r: 6, fill: '#2563eb', stroke: '#ffffff', strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: '#0b19f4', stroke: '#ffffff', strokeWidth: 2 }}
               
             />
           </ComposedChart>

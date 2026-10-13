@@ -15,7 +15,20 @@
     font-family: 'Roboto', sans-serif;
     background-color: rgba(242, 243, 255, 1);
     }
-
+    .header-nav ul {
+   display: flex;
+   align-items: center;
+   list-style: none;
+   gap: 16px; /* Ajustez l'espacement global entre vos éléments si besoin */
+   }
+.nav-divider
+   {
+   display: inline-block;
+   height: 18px; /* Hauteur de votre barre de séparation */
+   width: 1px;   /* Épaisseur de la ligne */
+   background-color: #0000ff; /* Couleur bleue (ou un bleu plus doux comme #3b82f6) */
+   margin: 0 8px; /* Espace autour du séparateur */
+   }
     /* Conteneur Logo */
     .header-logo {
     display: flex;
@@ -64,9 +77,11 @@
    align-items: flex-start;
    padding: 16px 48px;
    gap: 10px;
+   background: rgba(255, 255, 255, 0.9);
+   border-radius: 40px;
 
-   width: 461px;
-   height: 20px;
+   /*width: 461px;
+   /*height: 20px;
 
    background: rgba(255, 255, 255, 0.9);
    border-radius: 40px;
@@ -89,22 +104,22 @@
     .nav-link {
     text-decoration: none;
     color: #000000;
-    font-weight: 500;
-    font-size: 16px;
+    font-weight: 400;
+    font-size: 14px;
     transition: color 0.2s ease;
     }
 
     .nav-link:hover {
-    color: #ff0101;
+    color: rgba(11, 35, 244, 1);
     }
 
     /* Style du Bouton Logout */
     .nav-logout-btn {
     background: none;
     border: none;
-    color: #000000;
-    font-weight: 500;
-    font-size: 16px;
+    color: rgba(11, 35, 244, 1);
+    font-weight: 400;
+    font-size: 14px;
     cursor: pointer;
     padding: 0;
     transition: color 0.2s ease;

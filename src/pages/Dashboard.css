@@ -12,7 +12,7 @@ body {
 /* Conteneur principal centré */
 .dashboard-container
  {
-  max-width: 1140px;
+  max-width: 1052px;
   width: 1052px;
   width: 100%;
   margin: 0 auto;
@@ -39,6 +39,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
+  max-width: 1052px;
 }
 
 /* Wrapper de carte universel */
@@ -54,6 +55,8 @@ body {
 .weekly-wrapper {
   width: 100%;
   flex: auto;
+  max-width: 1052px;
+  display: flex;
 }
 
 /* Adaptation pour écrans plus petits / tablettes */

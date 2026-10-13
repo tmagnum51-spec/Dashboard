@@ -1,21 +1,23 @@
 .weekly-summary-container {
   display: flex;
-  gap: 16px;
-  max-width: 750px;
+  gap: 24px; /* Espace central équilibré entre les deux colonnes */
+  width: 100%; /* S'aligne parfaitement sur la largeur des graphiques du dessus */
+  max-width: 1052px;
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  
 }
 
 .summary-card {
   background-color: #ffffff;
   border-radius: 16px;
-  padding: 20px 24px;
+  padding: 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
 }
 
-/* Carte Donut (Gauche) */
+/* Carte Donut (Colonne de gauche) */
 .donut-card {
-  flex: 1.2;
+  flex: 1; /* Prend exactement 50% de l'espace */
   display: flex;
   flex-direction: column;
 }
@@ -31,7 +33,7 @@
 }
 
 .goal-text {
-  color: #a0aabf;
+  color: rgba(182, 189, 252, 1);
 }
 
 .summary-subtitle {
@@ -84,17 +86,20 @@
 
 /* Colonne de droite (Métriques) */
 .summary-metrics-column {
-  flex: 1;
+  flex: 1; /* Prend exactement 50% de l'espace pour s'aligner parfaitement à droite */
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px; /* Espace vertical entre vos 3 cartes de droite */
 }
 
+/* Les cartes de droite remplissent toute la largeur de leur colonne mais gardent leur hauteur naturelle */
 .metric-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
+  width: 100%; /* Remplit toute la largeur de la colonne de droite */
+  box-sizing: border-box;
+  /* Pas de flex: 1 ici pour éviter qu'elles ne s'étirent en hauteur, elles gardent leur taille de contenu et vous pourrez en mettre 3 facilement */
 }
 
 .metric-label {

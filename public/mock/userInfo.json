@@ -5,11 +5,11 @@
     "userInfos": {
       "firstName": "Sophie2",
       "lastName": "Martin",
-      "age": 32,
+      "age": 322,
       "gender": "female",
       "profilePicture": "http://localhost:8000/images/sophie.jpg",
-      "height": 165,
-      "weight": 60,
+      "height": 1655,
+      "weight": 601,
       "createdAt": "2025-01-01"
     }
   },

@@ -8,35 +8,13 @@ import WeeklySummary from '../components/WeeklySummary';
 import ProfileSummary from '../components/ProfileSummary';
 import './Dashboard.css';
 import Footer from '../components/Footer';
+import { useDashboard } from '../context/DashboardContext';
 
 const Dashboard = () => {
-  const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const user = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
+  const {userData,formattedStartDate, formattedEndDate, loading, error} = useDashboard();
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setError(null)
-      setIsLoading(true)
-      try {
-        
-        const datas = await getUserById(token, user)
-        setUserData(datas)
-      } catch (err) {
-        setError(err.message)
-        console.error('Erreur :', err);
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    fetchData()
-   
-  }, []);
-
-
-  if(isLoading){
+  if(loading){
     return <div style={{ padding: '20px' }}>Chargement des données...</div>;
   }
 
@@ -49,7 +27,7 @@ const Dashboard = () => {
   }
 
   const activityData = userData.userActivity?.runningData || userData.userActivity || [];
-
+console.log
   return (
     <>
       <Header />
@@ -60,6 +38,7 @@ const Dashboard = () => {
         <h2 className="section-title">Vos dernières performances</h2>
         <div className="charts-grid">
           {/* Graphique de distance */}
+          
           <div className="card-wrapper">
             <DistanceChart data={activityData} />
           </div>
@@ -70,7 +49,7 @@ const Dashboard = () => {
 
         {/* Section Résumé de la semaine */}
         <h2 className="section-title">Cette semaine</h2>
-        <p className="section-subtitle">Du 23/06/2025 au 30/06/2025</p>
+        <p className="section-subtitle">Du {formattedStartDate} au {formattedEndDate}</p>
 
         <div className="weekly-wrapper">
           {/* Graphique de résumé semaine */}
