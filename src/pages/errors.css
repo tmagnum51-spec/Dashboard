@@ -1,16 +1,26 @@
-.error-coontainer
+.error-container
 {
     display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(242, 243, 255, 1);
 }
 
 .error404
 {
     text-align: center;
-    color: blue;
+    color: blue;    
     font-style: normal;
-    font-weight: 800;
-    font-size: 32px;
+    font-weight: 200;
+    font-size: 34px;
     font-family: 'roboto';
+    align-items: center;
+    background-color: white;
+    padding: 20px 20px;
+    border-radius: 20px;
+
+
 
 
 }

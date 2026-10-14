@@ -39,15 +39,15 @@ export const DashboardProvider = ({ children }) => {
   const activities = userData?.userActivity || [];
   const userInfo = userData?.userInfos || {};
 
-  // 1. Récupérer l'objectif hebdomadaire (ou 6 par défaut)
+  // 1. Récupérer l'objectif hebdomadaire 
   const weeklyGoal = userInfo.weeklyGoal || 6;
 
-  // 2. Trouver la date la plus récente pour gérer proprement les fausses données (mock)
+  // 2. Trouver la date la plus récente 
   const latestDate = activities.length > 0 
     ? new Date(Math.max(...activities.map(s => new Date(s.date)))) 
     : new Date();
 
-  // 3. Définir le début de la dernière semaine active (7 jours glissants)
+  // 3. Définir le début de la dernière semaine active 
   const startOfLastWeek = new Date(latestDate);
   startOfLastWeek.setDate(startOfLastWeek.getDate() - 6);
 

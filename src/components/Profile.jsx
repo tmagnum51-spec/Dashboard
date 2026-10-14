@@ -134,13 +134,13 @@ const Profile = () => {
             </div>
 
             {/* Plus haute frequence cardio */}
-            <div className="stat-box-flying">
+            {/* <div className="stat-box-flying">
               <span className="stat-label-flying">Plus haute frequence cardio</span>
               <div className="stat-value-group-flying">
                 <span className="stat-value-flying">{maxHeartRate}</span>
                 <span className="stat-unit-flying">BPM</span>
               </div>
-            </div>
+            </div> */}
 
             {/* Nombre de sessions dynamique */}
             <div className="stat-box-flying">

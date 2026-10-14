@@ -79,11 +79,11 @@ const WeeklySummary = () => {
 
           <div className="donut-legend legend-left">
             <span className="dot dot-blue"></span>
-            {completedCount} réalisées
+            {completedCount} réalisée{completedCount > 1 ? 's' : ''}
           </div>
           <div className="donut-legend legend-right">
             <span className="dot dot-light"></span>
-            {remainingCount} restants
+            {remainingCount} restante{remainingCount > 1 ? 's' : ''} 
           </div>
         </div>
       </div>
@@ -93,14 +93,14 @@ const WeeklySummary = () => {
         <div className="summary-card metric-card">
           <span className="metric-label">Durée d'activité</span>
           <div className="metric-value blue-text">
-            {weeklyDuration} <span className="metric-unit">minutes</span>
+            {weeklyDuration} <span className="metric-unit">{weeklyDuration > 1 ?'minutes' :'minute'}</span>
           </div>
         </div>
 
         <div className="summary-card metric-card">
           <span className="metric-label">Distance</span>
           <div className="metric-value red-text">
-            {weeklyDistance} <span className="metric-unit">kilomètres</span>
+            {weeklyDistance} <span className="metric-unit">{weeklyDistance > 1 ? 'kilomètres' : 'kilomètre' }</span>
           </div>
         </div>
       </div>

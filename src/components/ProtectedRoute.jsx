@@ -7,7 +7,7 @@ export default function ProtectedRoute() {
 
   if (!isAuthenticated) {
     // Redirige vers /login si non connecté
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // Affiche les routes enfants si connecté

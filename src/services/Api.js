@@ -1,4 +1,4 @@
-const isDataMocked = true; 
+const isDataMocked = false; 
 
 const BASE_URL = 'http://localhost:8000/api';
 
