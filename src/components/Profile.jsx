@@ -1,36 +1,106 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import { useDashboard } from '../context/DashboardContext';
+import { getUserById } from '../services/Api';
 
 const Profile = () => {
-  // On pioche directement tout ce dont on a besoin depuis le Context
-  const { 
-    userData, 
-    totalDistance, 
-    totalSessions, 
-    totalCalories,
-    maxHeartRate, 
-    totalHours, 
-    totalMinutes, 
-    restDays, 
-    loading, 
-    error 
-  } = useDashboard();
+  // On récupère uniquement les données autorisées depuis le Context API
+  const { userData, totalDistance, loading: contextLoading, error: contextError } = useDashboard();
 
-  if (loading) {
+  // États locaux pour les statistiques et le chargement local
+  const [stats, setStats] = useState({
+    totalSessions: 0,
+    totalCalories: 0,
+    totalHours: 27,
+    totalMinutes: 15,
+    restDays: 0,
+  });
+  const [localLoading, setLocalLoading] = useState(true);
+  const [localError, setLocalError] = useState(null);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    if (!userId || !token) {
+      setLocalError("Utilisateur non authentifié.");
+      setLocalLoading(false);
+      return;
+    }
+
+    // Récupération locale des données et calculs indépendants
+    getUserById(token, userId)
+      .then((data) => {
+        const activities = data.userActivity?.runningData || data.userActivity || data.activities || [];
+        const totalSessions = activities.length;
+
+        // Calcul de la durée totale
+        const durationSum = activities.reduce((acc, curr) => acc + (Number(curr.duration) || 0), 0);
+        const totalHours = Math.floor(durationSum / 60);
+        const totalMinutes = durationSum % 60;
+
+        // Calcul des calories brûlées 
+        const totalCalories = activities.reduce((acc, curr) => {
+          const cal = Number(curr.caloriesBurned) || Number(curr.calories) || 0;
+          return acc + cal;
+        }, 0);
+
+        // Calcul des jours de repos basés sur la dernière semaine active
+        let restDays = 0;
+        if (activities.length > 0) {
+          const dates = activities.map(a => new Date(a.date)).filter(d => !isNaN(d));
+          if (dates.length > 0) {
+            const latestDate = new Date(Math.max(...dates));
+
+            // Début de la dernière semaine active 
+            const startOfLastWeek = new Date(latestDate);
+            startOfLastWeek.setDate(startOfLastWeek.getDate() - 6);
+
+            // Filtrer les sessions de cette dernière semaine
+            const activitiesInLastWeek = activities.filter(a => {
+              const d = new Date(a.date);
+              return d >= startOfLastWeek && d <= latestDate;
+            });
+
+            // Nombre de jours uniques d'activité sur cette période
+            const uniqueActiveDays = new Set(activitiesInLastWeek.map(a => a.date)).size;
+
+            // Jours de repos = 7 jours - jours actifs
+            restDays = Math.max(0, 7 - uniqueActiveDays);
+          }
+        }
+
+        setStats({
+          totalSessions,
+          totalCalories,
+          totalHours: totalHours || 27,
+          totalMinutes: totalMinutes || 15,
+          restDays,
+        });
+        setLocalLoading(false);
+      })
+      .catch((err) => {
+        console.error('Erreur lors du chargement des statistiques du profil :', err);
+        setLocalError("Erreur lors de la récupération des statistiques.");
+        setLocalLoading(false);
+      });
+  }, []);
+
+  // Vérifications de sécurité avant d'accéder aux données du context
+  if (contextLoading || localLoading) {
     return <div className="profile-loading">Chargement du profil...</div>;
   }
 
-  if (error) {
-    return <div className="profile-loading" style={{ color: 'red' }}>{error}</div>;
+  if (contextError || localError) {
+    return <div className="profile-loading" style={{ color: 'red' }}>{contextError || localError}</div>;
   }
 
   if (!userData) {
-    return <div className="profile-loading">Aucune donnée disponible.</div>;
+    return <div className="profile-loading">Aucune donnée utilisateur disponible.</div>;
   }
 
+  // Extraction sécurisée des informations utilisateur
   const info = userData.userInfos || {};
-  const stats = info.stats || {}; // Pour les stats statiques si besoin (temps, calories, repos)
 
   const formatDate = (dateString) => {
     if (!dateString) return '14 juin 2023';
@@ -95,27 +165,27 @@ const Profile = () => {
 
           <div className="stats-flying-grid">
             
-            {/* Temps total dynamique */}
+            {/* Temps total géré en local */}
             <div className="stat-box-flying">
               <span className="stat-label-flying">Temps total couru</span>
               <div className="stat-value-group-flying">
-                <span className="stat-value-flying">{totalHours || 27}</span>
+                <span className="stat-value-flying">{stats.totalHours}</span>
                 <span className="stat-unit-flying">h</span>
-                <span className="stat-value-flying">{totalMinutes || 15}</span>
+                <span className="stat-value-flying">{stats.totalMinutes}</span>
                 <span className="stat-unit-flying">min</span>
               </div>
             </div>
 
-            {/* Calories dynamiques */}
+            {/* Calories gérées en local */}
             <div className="stat-box-flying">
               <span className="stat-label-flying">Calories brûlées</span>
               <div className="stat-value-group-flying">
-                <span className="stat-value-flying">{totalCalories}</span>
+                <span className="stat-value-flying">{stats.totalCalories}</span>
                 <span className="stat-unit-flying">cal</span>
               </div>
             </div>
 
-            {/* Distance totale dynamique */}
+            {/* Distance totale provenant du Context API */}
             <div className="stat-box-flying">
               <span className="stat-label-flying">Distance totale parcourue</span>
               <div className="stat-value-group-flying">
@@ -124,29 +194,20 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Jours de repos */}
+            {/* Jours de repos calculés en local */}
             <div className="stat-box-flying">
               <span className="stat-label-flying">Nombre de jours de repos</span>
               <div className="stat-value-group-flying">
-                <span className="stat-value-flying">{restDays}</span>
+                <span className="stat-value-flying">{stats.restDays}</span>
                 <span className="stat-unit-flying">jours</span>
               </div>
             </div>
 
-            {/* Plus haute frequence cardio */}
-            {/* <div className="stat-box-flying">
-              <span className="stat-label-flying">Plus haute frequence cardio</span>
-              <div className="stat-value-group-flying">
-                <span className="stat-value-flying">{maxHeartRate}</span>
-                <span className="stat-unit-flying">BPM</span>
-              </div>
-            </div> */}
-
-            {/* Nombre de sessions dynamique */}
+            {/* Nombre de sessions géré en local */}
             <div className="stat-box-flying">
               <span className="stat-label-flying">Nombre de sessions</span>
               <div className="stat-value-group-flying">
-                <span className="stat-value-flying">{totalSessions}</span>
+                <span className="stat-value-flying">{stats.totalSessions}</span>
                 <span className="stat-unit-flying">sessions</span>
               </div>
             </div>

@@ -1,33 +1,23 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import { useDashboard } from '../context/DashboardContext';
 import './WeeklySummary.css';
 
-const WeeklySummary = () => {
-  const { userData, weeklyGoal, loading } = useDashboard();
-
-  if (loading || !userData) {
-    return <div className="weekly-summary-container">Chargement...</div>;
-  }
-
-  // 1. Extraction des sessions depuis le contexte
-  const activities = userData.userActivity || [];
-
-  // 2. Calcul local de la dernière semaine active (pour vos fausses données)
+const WeeklySummary = ({ data = [], weeklyGoal = 6 }) => {
+  // 1. Calcul local de la dernière semaine active basé sur les données reçues en props
   const currentWeekActivities = useMemo(() => {
-    if (activities.length === 0) return [];
+    if (!data || data.length === 0) return [];
     
-    const latestDate = new Date(Math.max(...activities.map(s => new Date(s.date))));
+    const latestDate = new Date(Math.max(...data.map(s => new Date(s.date))));
     const startOfLastWeek = new Date(latestDate);
     startOfLastWeek.setDate(startOfLastWeek.getDate() - 6);
 
-    return activities.filter(session => {
+    return data.filter(session => {
       const sessionDate = new Date(session.date);
       return sessionDate >= startOfLastWeek && sessionDate <= latestDate;
     });
-  }, [activities]);
+  }, [data]);
 
-  // 3. Calculs locaux pour le résumé de la semaine
+  // 2. Calculs locaux pour le résumé de la semaine
   const completedCount = currentWeekActivities.length;
   const remainingCount = Math.max(0, weeklyGoal - completedCount);
 
@@ -93,14 +83,14 @@ const WeeklySummary = () => {
         <div className="summary-card metric-card">
           <span className="metric-label">Durée d'activité</span>
           <div className="metric-value blue-text">
-            {weeklyDuration} <span className="metric-unit">{weeklyDuration > 1 ?'minutes' :'minute'}</span>
+            {weeklyDuration} <span className="metric-unit">{weeklyDuration > 1 ? 'minutes' : 'minute'}</span>
           </div>
         </div>
 
         <div className="summary-card metric-card">
           <span className="metric-label">Distance</span>
           <div className="metric-value red-text">
-            {weeklyDistance} <span className="metric-unit">{weeklyDistance > 1 ? 'kilomètres' : 'kilomètre' }</span>
+            {weeklyDistance} <span className="metric-unit">{weeklyDistance > 1 ? 'kilomètres' : 'kilomètre'}</span>
           </div>
         </div>
       </div>

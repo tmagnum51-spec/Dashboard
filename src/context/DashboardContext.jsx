@@ -8,8 +8,6 @@ export const DashboardProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
-
   useEffect(() => {
     setUserData(null);
     setLoading(true);
@@ -35,89 +33,19 @@ export const DashboardProvider = ({ children }) => {
       });
   }, []);
 
-  // -- Données de base --
+  // Extraction des activités pour calculer uniquement la distance totale 
   const activities = userData?.userActivity || [];
-  const userInfo = userData?.userInfos || {};
 
-  // 1. Récupérer l'objectif hebdomadaire 
-  const weeklyGoal = userInfo.weeklyGoal || 6;
-
-  // 2. Trouver la date la plus récente 
-  const latestDate = activities.length > 0 
-    ? new Date(Math.max(...activities.map(s => new Date(s.date)))) 
-    : new Date();
-
-  // 3. Définir le début de la dernière semaine active 
-  const startOfLastWeek = new Date(latestDate);
-  startOfLastWeek.setDate(startOfLastWeek.getDate() - 6);
-
-  const formatDateFr = (date) => {
-    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-
-  const formattedStartDate = formatDateFr(startOfLastWeek);
-  const formattedEndDate = formatDateFr(latestDate);
-
-  // 4. Filtrer les sessions de cette dernière semaine active
-  const currentWeekActivities = activities.filter(session => {
-    const sessionDate = new Date(session.date);
-    return sessionDate >= startOfLastWeek && sessionDate <= latestDate;
-  });
-
-  const completedWeeklySessions = currentWeekActivities.length;
-
-  // 5. Calculer les sessions restantes pour l'objectif
-  const remainingWeeklySessions = Math.max(0, weeklyGoal - completedWeeklySessions);
-
-  // Distance totale
+  // Calcul de la distance totale 
   const totalDistance = Math.round(
     activities.reduce((acc, session) => acc + (Number(session.distance) || 0), 0) * 10
   ) / 10;
-  
-  // Nombre total de sessions
-  const totalSessions = activities.length;
-
-  // Calories totales
-  const totalCalories = activities.reduce((acc, session) => acc + (Number(session.caloriesBurned) || 0), 0);
-
-  // Moyenne globale de la fréquence cardiaque
-  const avgHeartRate = activities.length > 0 
-    ? Math.round(
-        activities.reduce((acc, session) => acc + (Number(session.heartRate?.average) || 0), 0) / activities.length
-      )
-    : 0;
-    
-  // Fréquence cardiaque max absolue
-  const maxHeartRate = activities.length > 0
-    ? Math.max(...activities.map(session => Number(session.heartRate?.max) || 0))
-    : 0;
-
-  // Temps total couru
-  const totalMinutesAll = activities.reduce((acc, session) => acc + (Number(session.duration || session.time) || 0), 0);
-  const totalHours = Math.floor(totalMinutesAll / 60);
-  const totalMinutes = totalMinutesAll % 60;
-
-  // Jours de repos
-  const restDays = 9;
 
   return (
     <DashboardContext.Provider 
       value={{ 
-        weeklyGoal,
-        currentWeekActivities,
-        formattedStartDate,
-        formattedEndDate,
-        completedWeeklySessions,
-        remainingWeeklySessions,
         userData, 
         totalDistance, 
-        totalSessions, 
-        totalCalories,
-        avgHeartRate,
-        maxHeartRate, 
-        totalHours, 
-        totalMinutes, 
-        restDays, 
         loading, 
         error 
       }}
